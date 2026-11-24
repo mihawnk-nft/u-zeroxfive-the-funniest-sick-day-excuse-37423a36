@@ -28,6 +28,11 @@ def main() -> None:
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
     with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
         f.write(text)
+    # Read-back verification: the file on disk must hold exactly the entry.
+    with open(OUTPUT_PATH, "r", encoding="utf-8") as f:
+        written = f.read()
+    assert written == text, "entry.txt on disk differs from the entry"
+    print(f"wrote {len(text)} characters to {OUTPUT_PATH} (verified)")
 
 
 if __name__ == "__main__":
